@@ -1,0 +1,91 @@
+/* 
+    Document   : qys_zuan
+    Created on : 2014-9-11, 22:59:10
+    Author     : bfyang
+    Description:
+        Purpose of the stylesheet follows.
+*/
+*{font-family:"Microsoft Yahei";}
+.qys_top_bgline{
+    height:2px;
+    background-image: url(../images/bg-top.png);
+    background-repeat:repeat-x;
+}
+.qys_top_navbar_bottomline{
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 0px;
+}
+.qys_little_bar{
+    border:1px solid #080808;
+}
+.qys_icon_bar{
+    background-color: #080808;
+}
+.qys-top_navbar{margin-top:17px;margin-bottom: 0px;}
+
+.nav li a{
+    font-weight: 900;
+    color:#888;
+}
+.nav li a:hover{
+    font-weight: 900;
+    color:#ed5e58;
+    background-color:#fff;
+}
+.nav .active a{
+    font-weight: 900;
+    color:#ed5e58;
+    background-color:#fff;
+    border-bottom: 2px solid #ed5e58;
+}
+.qys_top_login{margin-top:35px;font-weight: 700;}
+.qys_second_nav{min-height: 35px;}
+.qys_color_gr{
+    background-color:#F8F8F8;
+}
+.qys_color_F3F3F3{
+    background-color:#F3F3F3;
+    padding-bottom:25px;
+}
+.qys_color_F8F8F8{
+    background-color:#F8F8F8;
+    padding-bottom:25px;
+}
+.qys_color_F5F5F5{
+    background-color:#F5F5F5;
+    padding-bottom:25px;
+}
+.qys_color_FFFFFF{
+   background-color:#FFFFFF;
+    padding-bottom:25px; 
+}
+.qys_index_pad{
+    background-color: #ffffff;
+    margin-bottom:25px;
+}
+.qys_index_pad_t{padding-left:10px;padding-right:10px;}
+.qys_index_progress{height:5px;margin-top:10px;margin-bottom: 10px;}
+.list-inline li{text-align: right;}
+.qys_little_style{color: #606060;}
+.qys_little_number{color: #ed5e58;}
+.qys_little_tittle{font-size: 12px;font-weight: 600;color: #959595;}
+.qys_project_tittle{font-size: 15px;color: #777;}
+.qys_footer_bg1{background-image: url(../images/footerbg1.png);}
+.qys_footer_bg2{background-image: url(../images/footerbg2.png);color: #efefef;padding-top:25px;padding-bottom: 15px;}
+.qys_footer_bg2 a{color:#efefef;}
+.qys_footer_bg2 a:hover{color:#ed5e58;text-decoration: none;}
+.qys_member_panel{margin-top:25px;}
+.qys_member_panel_title{font-size: 14px;color:#666;}
+.qys_member_left_menu_t{font-size: 13px;color: #d55;border-bottom: 2px solid #f4ceca;margin-bottom: 10px;margin-top: 5px;}
+.qys_member_left_menu_item{font-size:12px;padding:10px;}
+.qys_project_tittle a{text-decoration: none;}.qys_project_tittle a:hover{text-decoration: none;}
+.qys_carousel-caption{padding-bottom: 10px;text-align: left;background-color: #444444;padding: 15px 15px;font-size: 16px;opacity: 0.8;left:0%;right:0%;bottom: 0px;}
+.qys_details_title_h3 h3{background-color: #e3e3e3;padding: 10px 5px;color: #333333;}
+.qys_panel_default_zoupad{border-color: #ffffff;}
+.qys_panel_default_zoupad>.qys_panel_heading_title{color: #333;background-color: #e3e3e3;border-color: #e3e3e3;}
+.qys_details_panel_title{color:#333333;font-size: 14px;}
+.qys_help_top_div1{border: 1px solid #efefef;min-height: 50px;background-image: url(../images/qys_help_top_div1bg.gif);}
+.qys_choujilu_list{background-color: #f0f0f0;min-height: 30px;line-height: 30px;border-bottom: 1px solid #dfdfdf;}
+.qys_help_block{border:1px solid #efefef;padding:10px;margin-top: 25px;background-image: url(../images/help_bg.gif);background-repeat: no-repeat;}
+.qys_rulerbg{background-image: url(../images/publish/rulerbg.jpg);height: 276px;overflow-y: hidden;}
+.qys_publish_h4{font-size: 16px;line-height: 25px;color: black;}
