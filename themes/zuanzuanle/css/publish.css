@@ -1,0 +1,9 @@
+.qys_publish_content{width:98%;margin: 0 auto;padding:25px;}
+.qys_publish_content table{width:100%;}
+.qys_publish_content table tr{height:50px;line-height: 50px;}
+.qys_publish_td_left{font-weight: bold;font-size: 14px;text-align: right;width:150px;color:#5C5E5F;}
+.input_title{width:350px;height:30px;border:2px solid #F5D0CA;background-color: #FDF7D3;padding-left:10px;}
+.qys_publish_dec{padding:0px 25px;color:#999;font-size: 12px;font-weight: normal;}
+.input_select{width:150px;height:30px;border:2px solid #F5D0CA;background-color: #FDF7D3;padding-left:5px;}
+.input_account{width:150px;height:30px;border:2px solid #F5D0CA;background-color: #FDF7D3;padding-left:10px;}
+.publish_submit{margin: 25px 0px 25px 0px;width: 250px;height: 45px;font-weight: bold;font-size: 16px;color: #ed5e58;border: 2px solid #F5D0CA;cursor: pointer;}

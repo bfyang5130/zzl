@@ -1,0 +1,40 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 2015-6-12, 0:52:51
+    Author     : qinyangsheng
+*/
+.img-logo{width:40px;height:40px;}
+.qys_page_header{padding-bottom: 0px;margin: 0px;background-color: white;}
+.page_left_show,.page_right_show{  width: 15%;height: 50px;background-repeat:no-repeat;background-color:#f9fafc;height:50px;background-position:center center;}
+.page_right_show{background-image:url(../images/wechat/nav.png);}
+.page_left_show{background-image:url(../images/wechat/arrow-left.png);}
+.page_top_logo{line-height: 50px;}
+.page_top_logo>img{height: 15px;position: relative;top: -2px;margin: 5px;}
+.qys_page_menuUl>li{line-height: 35px;border-top: 1px solid #333;}
+.page_container {
+    position: relative;
+    background-color: white;
+    text-align: center;
+}
+
+.page_sidebar {
+    width: 30%;
+}
+
+.page_sidebar img {
+}
+
+.page_content {
+    // min-height: 250px;
+    // padding: 0px;
+    // box-sizing: border-box;
+    //-webkit-box-sizing: border-box;
+}
+.novas-carousel{
+    width:100%;
+}
+.btn-qys{  height: 40px;line-height: 30px;font-size: 16px;}
