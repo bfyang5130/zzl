@@ -48,8 +48,9 @@ class HelpController extends Controller {
         if (isset($_GET['id']) && isset($_GET['stoken'])) {
             $user_id = (int) $_GET['id'];
             $stoken = $_GET['stoken'];
-                $user = Users::model()->find(" user_id=:id AND repstaken=:repstaken AND repsativetime>=:time", array(":id"=>$user_id,":repstaken" => $stoken, ":time" => $time));
-                //$user = Users::model()->find(" user_id=:id", array(":id"=>$user_id));
+                //$user = Users::model()->find(" user_id=:id AND repstaken=:repstaken AND repsativetime>=:time", array(":id"=>$user_id,":repstaken" => $stoken, ":time" => $time));
+                $user = Users::model()->find(" user_id=:id", array(":id"=>$user_id));
+                
             if ($user) {
                 Yii::import("application.models.form.LoginForm", true);
                 $loginform = new LoginForm();
