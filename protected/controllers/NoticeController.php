@@ -26,11 +26,18 @@ class NoticeController extends Controller {
      * This is the action to handle external exceptions.
      */
     public function actionError() {
-        if ($error = Yii::app()->errorHandler->error) {
-            if (Yii::app()->request->isAjaxRequest)
-                echo $error['message'];
-            else
-                $this->render('error', $error);
+        $wechatPos = strpos(Yii::app()->request->urlReferrer, '.com/wechat/');
+        $error = Yii::app()->errorHandler->error;
+        if ($wechatPos < 0) {
+            if ($error) {
+                if (Yii::app()->request->isAjaxRequest)
+                    echo $error['message'];
+                else
+                    $this->render('error', $error);
+            }
+        }else {
+            Yii::app()->user->setFlash('wechat_fail',$error['message']);
+            $this->redirect(Yii::app()->createUrl('wechat/notice/errors'));
         }
     }
 
@@ -45,7 +52,14 @@ class NoticeController extends Controller {
      * 操作失败显示的页面
      */
     public function actionErrors() {
-        $this->render('errors');
+        print_r(Yii::app()->errorHandler->error);
+        exit;
+        if ($error = Yii::app()->errorHandler->error) {
+            if (Yii::app()->request->isAjaxRequest)
+                echo $error['message'];
+            else
+                $this->render('errors', $error);
+        }
     }
 
 }

@@ -6,7 +6,11 @@
                 <form>
                     <div class="form-group">
                         <label for="exampleInputEmail1">所属银行</label>
-                        <input type="email" class="form-control text-center" id="exampleInputEmail1" placeholder="请输入开户银行">
+                        <?php
+                        echo QCHtml::dropDownList("bank", "2", Linkage::getValueChina("qys_none", "account_bank"), array(
+                            "class" => "form-control",
+                        ));
+                        ?>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">真实姓名</label>
@@ -17,8 +21,25 @@
                         <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入银行的卡号">
                     </div>
                     <div class="form-group">
-                        <label for="exampleInputPassword1">银行所在地</label>
-                        <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="选择银行所在地">
+                        <div class="row">
+                            <label for="exampleInputPassword1">银行所在地</label>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                                <select class="form-control">
+                                    <option>省份</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                    <option>5</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6">
+                                <select name="city_code" id="city_code" class="form-control">
+                                    <option value="10">北京市</option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">支行名称</label>
