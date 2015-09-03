@@ -22,8 +22,30 @@
                     <?php echo $form->textField($userprodaddress, 'phone', array('class' => 'form-control text-center', 'placeholder' => '请输入收货人的电话或手机', 'maxlength' => 30)); ?>
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">收货人所在地</label>
-                    <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入收货人所在省份城市">
+                    <div class="row">
+                        <label for="exampleInputPassword1">收货人所在地</label>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                            <select class="form-control">
+                                <option>省份</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                                <option>5</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                            <select name="city_code" id="city_code" class="form-control">
+                                <option value="10">北京市</option>
+                            </select>
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-xs-4 col-sm-4">
+                            <select name="city_code" id="city_code" class="form-control">
+                                <option value="10">南城区</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">收货人的详细地址</label>

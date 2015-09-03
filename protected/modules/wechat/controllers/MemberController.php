@@ -54,6 +54,9 @@ class MemberController extends AbsWechatController {
     public function actionProAddress() {
         $user_id = Yii::app()->user->getId();
         $userprodaddress = UserProudctAddress::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+        if(!$userprodaddress){
+            $userprodaddress = new UserProudctAddress();
+        }
         if (isset($_POST['UserProudctAddress'])) {
             $userprodaddress->setAttributes($_POST['Users']);
             foreach ((array) $_POST['Users'] as $key => $value) {
