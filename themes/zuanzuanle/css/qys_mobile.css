@@ -38,3 +38,4 @@ and open the template in the editor.
     width:100%;
 }
 .btn-qys{  height: 40px;line-height: 30px;font-size: 16px;}
+#qys_address_show{display: none;}
