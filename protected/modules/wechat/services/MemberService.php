@@ -67,5 +67,14 @@ class MemberService {
         }
         return $userprodaddress;
     }
+    /**
+     * 保存用户的银行卡或者更改
+     * @param Bankcard $bankCard
+     * @param type $user_id
+     * @return \Bankcard
+     */
+    public static function saveBankCard(Bankcard $bankCard,$user_id){
+        return $bankCard;
+    }
 
 }

@@ -14,11 +14,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">真实姓名</label>
-                        <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入开户银行的真实姓名">
+                        <input type="text" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入开户银行的真实姓名">
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">银行卡号</label>
-                        <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入银行的卡号">
+                        <input type="text" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入银行的卡号">
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -43,7 +43,7 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleInputPassword1">支行名称</label>
-                        <input type="password" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入支行名称">
+                        <input type="text" class="form-control text-center" id="exampleInputPassword1" placeholder="请输入支行名称">
                     </div>
                     <button type="submit" class="btn btn-block btn-danger">更改</button>
                 </form>

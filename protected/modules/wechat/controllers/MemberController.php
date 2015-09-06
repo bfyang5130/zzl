@@ -44,8 +44,16 @@ class MemberController extends AbsWechatController {
      * 用户银行卡信息
      */
     public function actionBankCard() {
+        $user_id = Yii::app()->user->getId();
+        $bankCard = Bankcard::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+        if (!$bankCard) {
+            $bankCard = new Bankcard();
+        }
+        if (isset($_POST['BankCard'])) {
+            $bankCard = MemberService::saveBankCard($bankCard,$user_id);
+        }
         $this->pageTitle = "银行卡";
-        $this->render('member_bankcard');
+        $this->render('member_bankcard',array("bankCard" => $bankCard));
     }
 
     /**
