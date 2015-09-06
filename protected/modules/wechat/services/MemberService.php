@@ -74,6 +74,7 @@ class MemberService {
      * @return \Bankcard
      */
     public static function saveBankCard(Bankcard $bankCard,$user_id){
+        print_r($_POST);EXIT;
         return $bankCard;
     }
 
