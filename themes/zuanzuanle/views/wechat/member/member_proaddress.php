@@ -7,6 +7,13 @@
             </div>
             <div class="panel-body">
                 <?php
+                if($userprodaddress->getErrors()){
+                    echo '<div>';
+                    print_r($userprodaddress->getErrors());
+                    echo'</div>';
+                }
+                ?>
+                <?php
                 $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'channel-form',
                     'enableAjaxValidation' => false,
@@ -49,7 +56,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">收货人的详细地址</label>
-                    <?php echo $form->textField($userprodaddress, 'sysaddress', array('class' => 'form-control text-center', 'placeholder' => '请输入收货人的电话或手机', 'maxlength' => 30)); ?>
+                    <?php echo $form->textField($userprodaddress, 'address', array('class' => 'form-control text-center', 'placeholder' => '请输入收货人的详细地址', 'maxlength' => 30)); ?>
                 </div>
                 <button type="submit" class="btn btn-block btn-danger">更改</button>
                 <?php $this->endWidget(); ?>
