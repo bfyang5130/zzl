@@ -54,9 +54,25 @@ class MemberController extends AbsWechatController {
     public function actionProAddress() {
         $user_id = Yii::app()->user->getId();
         $userprodaddress = UserProudctAddress::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+        if (!$userprodaddress) {
+            $userprodaddress = new UserProudctAddress();
+        }
         if (isset($_POST['UserProudctAddress'])) {
-            $userprodaddress->setAttributes($_POST['Users']);
-            foreach ((array) $_POST['Users'] as $key => $value) {
+            $_POST['UserProudctAddress']['province'] = 'xx';
+            $_POST['UserProudctAddress']['city'] = 'xx';
+            $_POST['UserProudctAddress']['area'] = 'xx';
+            if (isset($_POST['province'])) {
+                $_POST['UserProudctAddress']['province'] = $_POST['province'];
+            }
+            if (isset($_POST['city'])) {
+                $_POST['UserProudctAddress']['city'] = $_POST['city'];
+            }
+            if (isset($_POST['area'])) {
+                $_POST['UserProudctAddress']['area'] = $_POST['area'];
+            }
+            $_POST['UserProudctAddress']['user_id']=$user_id;
+            $userprodaddress->setAttributes($_POST['UserProudctAddress']);
+            foreach ((array) $_POST['UserProudctAddress'] as $key => $value) {
                 if (trim($value) == '') {
                     $userprodaddress->addError($key, "字段不能为空");
                     break;
@@ -66,11 +82,11 @@ class MemberController extends AbsWechatController {
 
                 if ($userprodaddress->validate()) {
                     if ($userprodaddress->isNewRecord()) {
-                        $result=$userprodaddress->save();
-                    }else{
-                        $result=$userprodaddress->update();
+                        $result = $userprodaddress->save();
+                    } else {
+                        $result = $userprodaddress->update();
                     }
-                    if(!$result){
+                    if (!$result) {
                         $userprodaddress->addError("realname", "更新失败");
                     }
                 } else {
@@ -78,6 +94,7 @@ class MemberController extends AbsWechatController {
                     $userprodaddress->addError("realname", "更新失败");
                 }
             }
+            print_r($userprodaddress->getErrors());exit;
         }
         $this->pageTitle = "收货地址";
         $this->render('member_proaddress', array("userprodaddress" => $userprodaddress));
