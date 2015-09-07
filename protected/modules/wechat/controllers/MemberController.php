@@ -44,8 +44,16 @@ class MemberController extends AbsWechatController {
      * 用户银行卡信息
      */
     public function actionBankCard() {
+        $user_id = Yii::app()->user->getId();
+        $bankCard = Bankcard::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+        if (!$bankCard) {
+            $bankCard = new Bankcard();
+        }
+        if (isset($_POST['BankCard'])) {
+            $bankCard = MemberService::saveBankCard($bankCard,$user_id);
+        }
         $this->pageTitle = "银行卡";
-        $this->render('member_bankcard');
+        $this->render('member_bankcard',array("bankCard" => $bankCard));
     }
 
     /**
@@ -58,43 +66,7 @@ class MemberController extends AbsWechatController {
             $userprodaddress = new UserProudctAddress();
         }
         if (isset($_POST['UserProudctAddress'])) {
-            $_POST['UserProudctAddress']['province'] = 'xx';
-            $_POST['UserProudctAddress']['city'] = 'xx';
-            $_POST['UserProudctAddress']['area'] = 'xx';
-            if (isset($_POST['province'])) {
-                $_POST['UserProudctAddress']['province'] = $_POST['province'];
-            }
-            if (isset($_POST['city'])) {
-                $_POST['UserProudctAddress']['city'] = $_POST['city'];
-            }
-            if (isset($_POST['area'])) {
-                $_POST['UserProudctAddress']['area'] = $_POST['area'];
-            }
-            $_POST['UserProudctAddress']['user_id']=$user_id;
-            $userprodaddress->setAttributes($_POST['UserProudctAddress']);
-            foreach ((array) $_POST['UserProudctAddress'] as $key => $value) {
-                if (trim($value) == '') {
-                    $userprodaddress->addError($key, "字段不能为空");
-                    break;
-                }
-            }
-            if (!$userprodaddress->getErrors()) {
-
-                if ($userprodaddress->validate()) {
-                    if ($userprodaddress->isNewRecord()) {
-                        $result = $userprodaddress->save();
-                    } else {
-                        $result = $userprodaddress->update();
-                    }
-                    if (!$result) {
-                        $userprodaddress->addError("realname", "更新失败");
-                    }
-                } else {
-
-                    $userprodaddress->addError("realname", "更新失败");
-                }
-            }
-            print_r($userprodaddress->getErrors());exit;
+            $userprodaddress = MemberService::saveProAddress($userprodaddress,$user_id);
         }
         $this->pageTitle = "收货地址";
         $this->render('member_proaddress', array("userprodaddress" => $userprodaddress));

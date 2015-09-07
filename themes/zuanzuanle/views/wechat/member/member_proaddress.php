@@ -7,6 +7,12 @@
             </div>
             <div class="panel-body">
                 <?php
+                if ($userprodaddress->getErrors()) {
+                    $errors=$userprodaddress->getErrors();
+                    echo '<div>'.$errors[0][0].'</div>';
+                }
+                ?>
+                <?php
                 $form = $this->beginWidget('CActiveForm', array(
                     'id' => 'channel-form',
                     'enableAjaxValidation' => false,
@@ -49,7 +55,7 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">收货人的详细地址</label>
-                    <?php echo $form->textField($userprodaddress, 'sysaddress', array('class' => 'form-control text-center', 'placeholder' => '请输入收货人的电话或手机', 'maxlength' => 30)); ?>
+                    <?php echo $form->textField($userprodaddress, 'address', array('class' => 'form-control text-center', 'placeholder' => '请输入收货人的详细地址', 'maxlength' => 30)); ?>
                 </div>
                 <button type="submit" class="btn btn-block btn-danger">更改</button>
                 <?php $this->endWidget(); ?>
@@ -61,18 +67,38 @@
     <?php $this->renderPartial('//wechat/common/addressdiv') ?> 
     <script type="text/javascript">
         Zepto(function ($) {
+<?php
+if ($userprodaddress->province) {
+    ?>
+                $(".qys_common_provice").val(<?php echo $userprodaddress->province; ?>);
+<?php } ?>
             var newprovice = $(".qys_common_provice");
             $("#province_div").html(newprovice);
-            var newcity=$(".qys_common_city_110000");
+<?php
+if ($userprodaddress->city) {
+    ?>
+                $(".qys_common_city_<?php echo $userprodaddress->province; ?>").val(<?php echo $userprodaddress->city; ?>);
+                var newcity = $(".qys_common_city_<?php echo $userprodaddress->province; ?>");
+<?php } else { ?>
+                var newcity = $(".qys_common_city_110000");
+<?php } ?>
             $("#city_div").html(newcity);
-            var newarea=$(".qys_common_area_110100");
+<?php
+if ($userprodaddress->area) {
+    ?>
+                $(".qys_common_area_<?php echo $userprodaddress->city; ?>").val(<?php echo $userprodaddress->area; ?>);
+                var newarea = $(".qys_common_area_<?php echo $userprodaddress->city; ?>");
+<?php } else { ?>
+                var newarea = $(".qys_common_area_110100");
+<?php } ?>
+
             $("#area_div").html(newarea);
             $(".qys_common_provice").live('change', function () {
                 var province = $(".qys_common_provice").find("option").not(function () {
                     return !this.selected;
                 }).val();
                 $("#qys_address_show").append(newcity);
-                newcity=$(".qys_common_city_" + province);
+                newcity = $(".qys_common_city_" + province);
                 $("#city_div").html(newcity);
             });
             $("#city_div").children('select').live('change', function () {
@@ -80,7 +106,7 @@
                     return !this.selected;
                 }).val();
                 $("#qys_address_show").append(newarea);
-                newarea=$(".qys_common_area_" + city);
+                newarea = $(".qys_common_area_" + city);
                 $("#area_div").html(newarea);
             });
         });

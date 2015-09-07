@@ -34,6 +34,14 @@ class Bankcard extends CActiveRecord {
     }
 
     /**
+     * 返回公司帐号类型
+     * @return type
+     */
+    public static function getBankType() {
+        return array(0 => '私人帐号', 1 => '公司帐号');
+    }
+
+    /**
      * 
      * 保存数据之前进行处理
      */
