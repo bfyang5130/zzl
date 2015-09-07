@@ -49,7 +49,7 @@ class MemberController extends AbsWechatController {
         if (!$bankCard) {
             $bankCard = new Bankcard();
         }
-        if (isset($_POST['BankCard'])) {
+        if (isset($_POST['Bankcard'])) {
             $bankCard = MemberService::saveBankCard($bankCard,$user_id);
         }
         $this->pageTitle = "银行卡";
