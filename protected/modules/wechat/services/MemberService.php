@@ -67,14 +67,57 @@ class MemberService {
         }
         return $userprodaddress;
     }
+
     /**
      * 保存用户的银行卡或者更改
      * @param Bankcard $bankCard
      * @param type $user_id
      * @return \Bankcard
      */
-    public static function saveBankCard(Bankcard $bankCard,$user_id){
-        print_r($_POST);EXIT;
+    public static function saveBankCard(Bankcard $bankCard, $user_id) {
+        $_POST['Bankcard']['bank'] = 'xx';
+        if (isset($_POST['bank'])) {
+            $_POST['Bankcard']['bank'] = $_POST['bank'];
+            $bank = Linkage::getValueChina($_POST['bank'], "account_bank");
+            if ($bank) {
+                $_POST['Bankcard']['bank_name'] = $bank;
+            }
+        }
+        $_POST['Bankcard']['bank_type'] = 'xx';
+        if (isset($_POST['bank_type'])) {
+            $_POST['Bankcard']['bank_type'] = $_POST['bank_type'];
+        }
+        $_POST['Bankcard']['area'] = '0';
+        if (isset($_POST['province'])) {
+            $_POST['Bankcard']['province'] = $_POST['province'];
+        }
+        if (isset($_POST['city'])) {
+            $_POST['Bankcard']['city'] = $_POST['city'];
+        }
+        $_POST['Bankcard']['user_id'] = $user_id;
+        $bankCard->setAttributes($_POST['Bankcard']);
+        foreach ((array) $_POST['Bankcard'] as $key => $value) {
+            if (trim($value) == '') {
+                $bankCard->addError($key, "字段不能为空");
+                break;
+            }
+        }
+        if (!$bankCard->getErrors()) {
+            $bankCard->setAttribute('addtime', time());
+            $bankCard->setAttribute('addip', Yii::app()->request->userHostAddress);
+            if ($bankCard->validate()) {
+                if ($bankCard->isNewRecord) {
+                    $result = $bankCard->save();
+                } else {
+                    $result = $bankCard->update();
+                }
+                if (!$result) {
+                    $bankCard->addError("realname", "更新失败");
+                }
+            } else {
+                $bankCard->addError("realname", "更新失败");
+            }
+        }
         return $bankCard;
     }
 
