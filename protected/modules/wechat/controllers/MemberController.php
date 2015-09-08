@@ -50,10 +50,10 @@ class MemberController extends AbsWechatController {
             $bankCard = new Bankcard();
         }
         if (isset($_POST['Bankcard'])) {
-            $bankCard = MemberService::saveBankCard($bankCard,$user_id);
+            $bankCard = MemberService::saveBankCard($bankCard, $user_id);
         }
         $this->pageTitle = "银行卡";
-        $this->render('member_bankcard',array("bankCard" => $bankCard));
+        $this->render('member_bankcard', array("bankCard" => $bankCard));
     }
 
     /**
@@ -66,7 +66,7 @@ class MemberController extends AbsWechatController {
             $userprodaddress = new UserProudctAddress();
         }
         if (isset($_POST['UserProudctAddress'])) {
-            $userprodaddress = MemberService::saveProAddress($userprodaddress,$user_id);
+            $userprodaddress = MemberService::saveProAddress($userprodaddress, $user_id);
         }
         $this->pageTitle = "收货地址";
         $this->render('member_proaddress', array("userprodaddress" => $userprodaddress));
@@ -92,8 +92,16 @@ class MemberController extends AbsWechatController {
      * 系统信息
      */
     public function actionMessage() {
+        $this->pageTitle = "系统信息";
+        $this->render('member_accountlog');
+    }
+
+    /**
+     *  资金信息
+     */
+    public function actionAccountlog() {
         $this->pageTitle = "资金明细";
-        $this->render('member_message');
+        $this->render('member_accountlog');
     }
 
     /**
