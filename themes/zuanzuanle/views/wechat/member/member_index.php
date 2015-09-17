@@ -2,7 +2,7 @@
 <div class="page_content" style="-webkit-transform: translate3d(0px, 0px, 0px);">
     <?php $this->renderPartial('//wechat/common/usertop') ?>
     <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
-        <a class="btn btn-qys btn-success btn-block">充值</a>
+        <a class="btn btn-qys btn-danger btn-block">充值</a>
         <a class="btn btn-qys btn-warning btn-block">提现</a>
     </div>
     <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
