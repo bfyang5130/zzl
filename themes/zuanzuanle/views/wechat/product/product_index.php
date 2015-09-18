@@ -1,5 +1,8 @@
 <div class="page_content" style="-webkit-transform: translate3d(0px, 0px, 0px);">
-    <div class="col-lg-12" style="margin-top:25px;">
+    <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
+        <a href="<?php echo Yii::app()->createUrl('/wechat/product/addProduct') ?>" class="btn btn-qys btn-danger btn-block">添加商品</a>
+    </div>
+    <div class="col-lg-12 qys_col_12" style="margin-top:25px;">
         <div class="panel panel-default">
             <div class="panel-body">
                 <div class="col-lg-5">

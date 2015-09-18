@@ -2,7 +2,7 @@
 <div class="page_content" style="-webkit-transform: translate3d(0px, 0px, 0px);">
     <?php $this->renderPartial('//wechat/common/usertop') ?>
     <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
-        <a class="btn btn-qys btn-success btn-block">充值</a>
+        <a class="btn btn-qys btn-danger btn-block">充值</a>
         <a class="btn btn-qys btn-warning btn-block">提现</a>
     </div>
     <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
@@ -11,7 +11,7 @@
             <a href="<?php echo Yii::app()->createUrl('/wechat/member/userinfo') ?>" class="btn btn-qys btn-default btn-block"><span class="glyphicon glyphicon-user" aria-hidden="true"></span> 基本信息</a>
             <a href="<?php echo Yii::app()->createUrl('/wechat/member/bankCard') ?>" class="btn btn-qys btn-default btn-block"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span> 我的银行</a>
             <a href="<?php echo Yii::app()->createUrl('/wechat/member/proAddress') ?>" class="btn btn-qys btn-default btn-block"><span class="glyphicon glyphicon-flag" aria-hidden="true"></span> 收货地址</a>
-            <a href="<?php echo Yii::app()->createUrl('/wechat/member/message') ?>" class="btn btn-qys btn-default btn-block"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> 资金明细</a>
+            <a href="<?php echo Yii::app()->createUrl('/wechat/member/accountlog') ?>" class="btn btn-qys btn-default btn-block"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span> 资金明细</a>
         </div>
     </div>
     <div class="col-lg-12" style="padding:10px 25px 0px 25px;">
