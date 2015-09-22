@@ -15,8 +15,51 @@ class WeixinKeyWordService {
     /**
      * 微信处理关键字
      */
-    public static function fitKeyWord($obj) {
-        
+    public static function fitKeyWord($obj, Users $user) {
+        $keyword = strtolower($obj->Content);
+        switch ($keyword) {
+            #开启图片保存
+            case 'p':self::getPRepay($obj, $user);
+                break;
+            #关闭图片保存
+            case 'ep':self::getEPRepay($obj, $user);
+                break;
+            default :self::getDefaultWorkRepay($obj, $user);
+        }
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public static function getDefaultWorkRepay($object, $weixinuser) {
+        $content = "亲爱的用户，您的留言我们已经收到,我们将尽快给你回复。";
+        WechatCheck::_transmitText($object, $content);
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public static function getEPRepay($object, Users $weixinuser) {
+        Yii::app()->cache->offsetUnset("qys_pic_save_" . $weixinuser->user_id);
+        $content = "亲爱的用户，图片保存服务已关闭。";
+        WechatCheck::_transmitText($object, $content);
+    }
+
+    /**
+     * 
+     * @return string
+     */
+    public static function getPRepay($object, Users $weixinuser) {
+        $count = Pic::model()->count("user_id=:user_id", array(":user_id" => $weixinuser->user_id));
+        if ($count < 20) {
+            Yii::app()->cache->set("qys_pic_save_" . $weixinuser->user_id, $count);
+            $content = "亲爱的用户，已经为你开启保存图片服务,当前已经保存了" . $count . "张,还能保存" . (20 - $count) . "张。";
+        } else {
+            $content = "亲爱的用户，您已经保存了20张图片,将不再给予保存。";
+        }
+        WechatCheck::_transmitText($object, $content);
     }
 
     //put your code here
