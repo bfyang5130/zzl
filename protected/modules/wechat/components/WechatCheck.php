@@ -281,7 +281,7 @@ class WechatCheck {
             }
             switch ($RX_TYPE) {
                 case "text":
-                    $resultStr = WeixinKeyWordService::fitKeyWord($postObj);
+                    $resultStr = WeixinKeyWordService::fitKeyWord($postObj,$user);
                     break;
                 case "image":
                     $resultStr = WeixinImageService::fitImage($postObj);
