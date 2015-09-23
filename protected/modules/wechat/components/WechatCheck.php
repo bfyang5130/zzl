@@ -284,7 +284,7 @@ class WechatCheck {
                     $resultStr = WeixinKeyWordService::fitKeyWord($postObj,$user);
                     break;
                 case "image":
-                    $resultStr = WeixinImageService::fitImage($postObj);
+                    $resultStr = WeixinImageService::fitImage($postObj,$user);
                     break;
                 case "location":
                     $resultStr = WeixinLocationService::fitLocation($postObj);
