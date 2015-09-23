@@ -110,4 +110,19 @@ class Pic extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+                /**
+     * 
+     * 保存数据之前进行处理
+     */
+    protected function beforeSave() {
+        if (parent::beforeSave()) {
+            if ($this->isNewRecord) {
+                $this->pic_addtime = time();
+                $this->pic_addip = Yii::app()->request->userHostAddress;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
