@@ -8,6 +8,7 @@
  * @property integer $product_id
  * @property string $product_name
  * @property integer $user_id
+ * @property integer $p_user_id
  * @property string $order_price
  * @property string $order_pay_price
  * @property integer $coupon_id
@@ -37,13 +38,13 @@ class ProductOrder extends CActiveRecord
 		// will receive user inputs.
 		return array(
 			array('order_id, product_id, user_id', 'required'),
-			array('order_id, product_id, user_id, coupon_id, order_status, addtime', 'numerical', 'integerOnly'=>true),
+			array('order_id, product_id, user_id, p_user_id, coupon_id, order_status, addtime', 'numerical', 'integerOnly'=>true),
 			array('product_name, realname, phone, addip', 'length', 'max'=>100),
 			array('order_price, order_pay_price', 'length', 'max'=>10),
 			array('address', 'length', 'max'=>300),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('order_id, product_id, product_name, user_id, order_price, order_pay_price, coupon_id, order_status, realname, phone, address, addtime, addip', 'safe', 'on'=>'search'),
+			array('order_id, product_id, product_name, user_id, p_user_id, order_price, order_pay_price, coupon_id, order_status, realname, phone, address, addtime, addip', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -68,6 +69,7 @@ class ProductOrder extends CActiveRecord
 			'product_id' => 'Product',
 			'product_name' => 'Product Name',
 			'user_id' => 'User',
+			'p_user_id' => 'P User',
 			'order_price' => 'Order Price',
 			'order_pay_price' => 'Order Pay Price',
 			'coupon_id' => 'Coupon',
@@ -102,6 +104,7 @@ class ProductOrder extends CActiveRecord
 		$criteria->compare('product_id',$this->product_id);
 		$criteria->compare('product_name',$this->product_name,true);
 		$criteria->compare('user_id',$this->user_id);
+		$criteria->compare('p_user_id',$this->p_user_id);
 		$criteria->compare('order_price',$this->order_price,true);
 		$criteria->compare('order_pay_price',$this->order_pay_price,true);
 		$criteria->compare('coupon_id',$this->coupon_id);
