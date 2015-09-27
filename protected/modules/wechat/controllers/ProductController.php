@@ -39,6 +39,22 @@ class ProductController extends AbsWechatController {
         if (isset($_GET['id'])) {
             $product = Product::model()->find("product_id=:pid and product_user_id=:uid", array(":pid" => $_GET['id'], ":uid" => $user_id));
             if ($product) {
+                if (isset($_POST) && isset($_POST['Product'])) {
+                    #更改数据的处理
+                    $picarray = $_POST['Product'];
+                    if (isset($_POST['pic_id'])) {
+                        $pic_select = Pic::model()->findByPk($_POST['pic_id'], "user_id=:user_id", array(":user_id" => $user_id));
+                        if ($pic_select) {
+                            $picarray['product_s_img'] = $pic_select->pic_s_img;
+                            $picarray['product_m_img'] = $pic_select->pic_m_img;
+                            $picarray['product_b_img'] = $pic_select->pic_b_img;
+                        }
+                    }
+                    $product->setAttributes($picarray);
+                    if ($product->validate() && $product->save()) {
+                        $this->redirect(Yii::app()->createUrl('/wechat/product/addProduct'));
+                    }
+                }
                 $this->render('product_ch', array("product" => $product));
                 Yii::app()->end();
             }

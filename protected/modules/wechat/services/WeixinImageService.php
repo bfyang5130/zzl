@@ -18,14 +18,16 @@ class WeixinImageService {
     public static function fitImage($obj, Users $user) {
         #判断图片是否开启
         $pic_save_status = Yii::app()->cache->get("qys_pic_save_" . $user->user_id);
-        $count=Pic::model()->count("user_id=:user_id", array(":user_id" => $user->user_id));
-        if ($pic_save_status !== false && $pic_save_status >= 20&&$count>=20) {
+        $count = Pic::model()->count("user_id=:user_id", array(":user_id" => $user->user_id));
+        if ($pic_save_status == false) {
+            $content = "没有开启保存图片功能,该图片不会被服务器保存.";
+        }elseif($count >= 20){
             $content = "图片已经超过20张,不再做保存。";
         } else {
-            $count=Pic::model()->count("user_id=:user_id", array(":user_id" => $user->user_id));
+            $count = Pic::model()->count("user_id=:user_id", array(":user_id" => $user->user_id));
             #获得图片地址
             $pic = file_get_contents($obj->PicUrl);
-            $picname = time() . "_" . $user->user_id .($count+1). ".gif";
+            $picname = time() . "_" . $user->user_id . ($count + 1) . ".gif";
             $pic_path = Yii::getPathOfAlias('webroot') . '/date/uplaod/';
             $pic_show_path = '/date/uplaod/';
             file_put_contents($pic_path . $picname, $pic);
@@ -50,10 +52,10 @@ class WeixinImageService {
                     'pic_b_img' => $pic_show_path . "n_" . $picname,
                 );
                 $userPic->setAttributes($picArray);
-                if($userPic->validate()&&$userPic->save()){
+                if ($userPic->validate() && $userPic->save()) {
                     $content = "图片已经保存。";
-                }else{
-                     $content = "图片保存失败,请重新发送。";
+                } else {
+                    $content = "图片保存失败,请重新发送。";
                 }
             } else {
                 $content = "保存失败。";

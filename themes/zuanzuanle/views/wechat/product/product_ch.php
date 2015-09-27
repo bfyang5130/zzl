@@ -46,7 +46,35 @@
                     <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6"></div>
                 </div>
                 <div class="row">
-                    <div class="col-lg-12">123</div>
+                    <div class="col-lg-12" style="text-align: left;">
+                        <?php
+                        if($product->product_s_img){
+                         echo  '<img src="'.$product->product_s_img.'"/>';  
+                        }else{
+                            echo '暂无图片';
+                        }
+                        ?>
+                    </div>
+                </div>
+                <div class="row qys_addp_row">
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6 text-left">更换产品图片：</div>
+                    <div class="col-lg-6 col-md-6 col-xs-6 col-sm-6"></div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12" style="text-align: left;">
+                        <?php
+                        #获得当前用户的图片
+                        $user_id=Yii::app()->user->getId();
+                        $imagelist=  Pic::model()->findAll("user_id=:user_id",array(":user_id"=>$user_id));
+                        foreach ($imagelist as $key => $value) {
+                          ?>
+                        <label class="radio-inline">
+                            <input type="radio" name="pic_id" value="<?php echo $value->id ?>"> <img style="width:60px;height:40px;" src="<?php echo $value->pic_s_img ?>"/>
+                        </label>
+                        <?php
+                        }
+                        ?>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-default btn-warning">提交</button>
                 <?php $this->endWidget(); ?>
