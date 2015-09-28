@@ -27,7 +27,7 @@ $user = Users::model()->findByPk($user_id);
                             <div>
                                 <h5><?= $product->product_name ?></h5>
                                 <p><?= $product->product_description ?></p>
-                                <p><a onclick="if(confirm('确定购买号?')==false)return false;" href="<?= Yii::app()->createUrl('/wechat/product/order/id/'.$product->product_id) ?>" class="btn btn-block btn-danger">￥<?= $product->product_price ?> 购买商品</a></p>
+                                <p><a onclick="if(confirm('确定购买号?')==false)return false;" href="<?= Yii::app()->createUrl('/wechat/product/order/id/'.$value->product_id) ?>" class="btn btn-block btn-danger">￥<?= $product->product_price ?> 购买商品</a></p>
                             </div>
                         </div>
                         <?php if ($key % 2 == 1): ?>

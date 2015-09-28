@@ -18,7 +18,6 @@ class ProductController extends AbsWechatController {
      */
     public function actionAddProduct() {
         $this->pageTitle = "添加商品";
-
         $product = new Product();
         if (isset($_POST) && isset($_POST['Product'])) {
             $_POST['Product']['product_user_id'] = Yii::app()->user->getId();
@@ -40,7 +39,6 @@ class ProductController extends AbsWechatController {
         if (isset($_GET['id'])) {
             $pid = $_GET['id'];
             $product = Product::model()->findByPk($pid);
-            $product = new Product();
             if ($product) {
                 #获得用户的可用资金
                 $user_id = Yii::app()->user->getId();
@@ -54,43 +52,81 @@ class ProductController extends AbsWechatController {
                             $addip = Yii::app()->request->getUserHostAddress();
                             $in_order_price = $in_order_pay_price = $product->product_price;
                             $in_coupon_id = 0;
+                            $in_p_user_id = $product->product_user_id;
+                            $p_id = $product->product_id;
+                            $in_realname = $userAddress->realname;
+                            $in_phone = $userAddress->phone;
+                            $in_address = $userAddress->address;
                             $conn = Yii::app()->db;
                             $command = $conn->createCommand('call p_build_Product_Order(:in_user_id,:in_p_user_id,:p_id,:in_order_price,:in_order_pay_price,:in_coupon_id,:in_realname,:in_phone,:in_address,:in_addip,@out_status,@out_remark)');
                             $command->bindParam(":in_user_id", $user_id, PDO::PARAM_INT);
-                            $command->bindParam(":in_p_user_id", $product->product_user_id, PDO::PARAM_INT);
-                            $command->bindParam(":p_id", $product->product_id, PDO::PARAM_INT);
+                            $command->bindParam(":in_p_user_id", $in_p_user_id, PDO::PARAM_INT);
+                            $command->bindParam(":p_id", $p_id, PDO::PARAM_INT);
                             $command->bindParam(":in_order_price", $in_order_price, PDO::PARAM_STR, 30);
                             $command->bindParam(":in_order_pay_price", $in_order_pay_price, PDO::PARAM_STR, 30);
                             $command->bindParam(":in_coupon_id", $in_coupon_id, PDO::PARAM_INT);
-                            $command->bindParam(":in_realname", $userAddress->realname, PDO::PARAM_STR, 30);
-                            $command->bindParam(":in_phone", $userAddress->phone, PDO::PARAM_STR, 30);
-                            $command->bindParam(":in_address", $userAddress->address, PDO::PARAM_STR, 200);
+                            $command->bindParam(":in_realname", $in_realname, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_phone", $in_phone, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_address", $in_address, PDO::PARAM_STR, 200);
                             $command->bindParam(":in_addip", $addip, PDO::PARAM_STR, 50);
                             $command->execute();
                             $result = $conn->createCommand("select @out_status as status,@out_remark as remark")->queryRow(true);
                             if ($result['status'] == 1) {
-                                echo 1;
+                                $error = '购买成功！';
+                                $notices = array(
+                                    'type' => 3,
+                                    'msgtitle' => '错误信息',
+                                    'message' => $error,
+                                    'backurl' => Yii::app()->request->urlReferrer,
+                                    'backtitle' => '返回',
+                                    'tourl' => Yii::app()->createUrl('/wechat/member/myProduct'),
+                                    'totitle' => '查看订单'
+                                );
                             } else {
-                                echo $result['remark'];
+                                $error = $result['remark'];
+                                $notices = array('type' => 2, 'msgtitle' => '错误信息', 'message' => $error, 'backurl' => Yii::app()->request->urlReferrer, 'backtitle' => '返回');
                             }
                         } catch (Exception $e) {
-                            echo '系统繁忙，暂时无法处理';
+                            $error = '系统繁忙，暂时无法处理';
+                            $notices = array('type' => 2, 'msgtitle' => '错误信息', 'message' => $error, 'backurl' => Yii::app()->request->urlReferrer, 'backtitle' => '返回');
                         }
                     } else {
                         #跳转到充值页面
                         $error = "你的可用资金不足以购买此商品。";
+                        $notices = array(
+                            'type' => 3,
+                            'msgtitle' => '错误信息',
+                            'message' => $error,
+                            'backurl' => Yii::app()->request->urlReferrer,
+                            'backtitle' => '返回',
+                            'tourl' => Yii::app()->createUrl('/wechat/member/addmoney'),
+                            'totitle' => '前往充值'
+                        );
                     }
                 } else {
                     #跳转到充值页面
                     $error = "您没有填写收货地址。";
+                    $notices = array(
+                        'type' => 3,
+                        'msgtitle' => '错误信息',
+                        'message' => $error,
+                        'backurl' => Yii::app()->request->urlReferrer,
+                        'backtitle' => '返回',
+                        'tourl' => Yii::app()->createUrl('/wechat/member/proAddress'),
+                        'totitle' => '完善送货地址'
+                    );
                 }
             } else {
                 $error = "不存在此商品或者该商品已下架。";
+                $notices = array('type' => 2, 'msgtitle' => '错误信息', 'message' => $error, 'backurl' => Yii::app()->request->urlReferrer, 'backtitle' => '返回');
             }
         } else {
             $error = "不存在此商品或者该商品已下架。";
+            $notices = array('type' => 2, 'msgtitle' => '错误信息', 'message' => $error, 'backurl' => Yii::app()->request->urlReferrer, 'backtitle' => '返回');
         }
-        Yii::app()->user->setFlash('wechat_fail', $error);
+        #msg类型：type=1错误信息2指示跳转3返回跳转
+
+        Yii::app()->user->setFlash('wechat_fail', array($notices));
         $this->redirect(Yii::app()->createUrl('wechat/notice/errors'));
     }
 

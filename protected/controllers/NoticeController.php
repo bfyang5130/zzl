@@ -36,7 +36,9 @@ class NoticeController extends Controller {
                     $this->render('error', $error);
             }
         }else {
-            Yii::app()->user->setFlash('wechat_fail',$error['message']);
+            #msg类型：type=1错误信息2指示跳转3返回跳转
+            $notices=array('type'=>1,'msgtitle'=>'错误信息','message'=>$error['message']);
+            Yii::app()->user->setFlash('wechat_fail',$notices);
             $this->redirect(Yii::app()->createUrl('wechat/notice/errors'));
         }
     }
