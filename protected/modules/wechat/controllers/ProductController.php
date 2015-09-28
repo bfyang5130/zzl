@@ -44,16 +44,27 @@ class ProductController extends AbsWechatController {
             if ($product) {
                 #获得用户的可用资金
                 $user_id = Yii::app()->user->getId();
-                $userAccount = Account::model()->find("user_id=:user_id", array(":user_id" => $user_id));
-                if (!$userAccount->use_money < $product->product_price) {
-                    #调有存储过程冻结资金并生成订单
-                    try {
-                        $addip=Yii::app()->request->getUserHostAddress();
+                #判断用户是否已经填写了送货地址
+                $userAddress = UserProudctAddress::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+                if ($userAddress) {
+                    $userAccount = Account::model()->find("user_id=:user_id", array(":user_id" => $user_id));
+                    if (!$userAccount->use_money < $product->product_price) {
+                        #调有存储过程冻结资金并生成订单
+                        try {
+                            $addip = Yii::app()->request->getUserHostAddress();
+                            $in_order_price = $in_order_pay_price = $product->product_price;
+                            $in_coupon_id = 0;
                             $conn = Yii::app()->db;
-                            $command = $conn->createCommand('call p_build_Product_Order(:user_id,:p_user_id,:p_id,:in_addip,@out_status,@out_remark)');
-                            $command->bindParam(":user_id", $user_id, PDO::PARAM_INT);
-                            $command->bindParam(":p_user_id", $product->product_user_id, PDO::PARAM_INT);
+                            $command = $conn->createCommand('call p_build_Product_Order(:in_user_id,:in_p_user_id,:p_id,:in_order_price,:in_order_pay_price,:in_coupon_id,:in_realname,:in_phone,:in_address,:in_addip,@out_status,@out_remark)');
+                            $command->bindParam(":in_user_id", $user_id, PDO::PARAM_INT);
+                            $command->bindParam(":in_p_user_id", $product->product_user_id, PDO::PARAM_INT);
                             $command->bindParam(":p_id", $product->product_id, PDO::PARAM_INT);
+                            $command->bindParam(":in_order_price", $in_order_price, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_order_pay_price", $in_order_pay_price, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_coupon_id", $in_coupon_id, PDO::PARAM_INT);
+                            $command->bindParam(":in_realname", $userAddress->realname, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_phone", $userAddress->phone, PDO::PARAM_STR, 30);
+                            $command->bindParam(":in_address", $userAddress->address, PDO::PARAM_STR, 200);
                             $command->bindParam(":in_addip", $addip, PDO::PARAM_STR, 50);
                             $command->execute();
                             $result = $conn->createCommand("select @out_status as status,@out_remark as remark")->queryRow(true);
@@ -65,9 +76,13 @@ class ProductController extends AbsWechatController {
                         } catch (Exception $e) {
                             echo '系统繁忙，暂时无法处理';
                         }
+                    } else {
+                        #跳转到充值页面
+                        $error = "你的可用资金不足以购买此商品。";
+                    }
                 } else {
                     #跳转到充值页面
-                    $error = "你的可用资金不足以购买此商品。";
+                    $error = "您没有填写收货地址。";
                 }
             } else {
                 $error = "不存在此商品或者该商品已下架。";

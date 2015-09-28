@@ -15,8 +15,8 @@
                 foreach ($accountlog as $values) {
                     ?>
                     <tr>
-                        <td><?php echo $values->product_id; ?></td>
-                        <td><?php echo $values->product_name; ?></td>
+                        <td><?php echo $values->product->product_s_img; ?></td>
+                        <td><?php echo $values->product->product_name; ?></td>
                         <td><?php echo $values->order_status; ?></td>
                         <td>查看</td>
                     </tr>
